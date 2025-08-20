@@ -69,13 +69,11 @@ export async function launch(
 		if (!found) opts.args.push(arg + value);
 	}
 
-	if (!opts.extensionPath) {
-		opts.extensionPath = path.join(__dirname, "..", "extension");
-	}
+	if (!Array.isArray(opts.enableExtensions)) opts.enableExtensions = [];
 
-	addToArgs("--load-extension=", opts.extensionPath);
-	addToArgs("--disable-extensions-except=", opts.extensionPath);
-	addToArgs("--allowlisted-extension-id=", extensionId);
+	opts.enableExtensions.push(path.join(__dirname, "..", "extension"));
+	opts.pipe = true;
+
 	addToArgs("--autoplay-policy=no-user-gesture-required");
 	addToArgs("--auto-accept-this-tab-capture");
 
